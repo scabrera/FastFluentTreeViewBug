@@ -1,0 +1,16 @@
+﻿@using Microsoft.Fast.Components.FluentUI
+@using static TreeViewExampleBug.Pages.Index;
+
+@foreach (var category in Categories)
+{
+    <FluentTreeItem Id="@category.Id.ToString()" Expanded="true" Text="@category.Name">
+        @if (category.Childs is not null)
+        {
+            <TreeViewItem Categories="category.Childs"></TreeViewItem>
+        }
+    </FluentTreeItem>
+}
+
+@code {
+    [Parameter] public IEnumerable<KeyCategory> Categories { get; set; }
+}

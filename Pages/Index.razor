@@ -1,0 +1,76 @@
+﻿@page "/"
+@using Microsoft.Fast.Components.FluentUI
+
+
+<FluentTreeView>
+    <TreeViewItem Categories="keyCategories"></TreeViewItem>
+</FluentTreeView>
+
+@code {
+
+    private IEnumerable<KeyCategory> keyCategories = Enumerable.Empty<KeyCategory>();
+
+    protected override Task OnInitializedAsync()
+    {
+        if (keyCategories.Count() == 0)
+        {
+            keyCategories = new HashSet<KeyCategory>
+            {
+                new KeyCategory{ Id=1, Name= "Viseo", Icono=FluentIcons.Apps,
+                        Childs = new HashSet<KeyCategory>
+                        {
+                             new KeyCategory { Id=2, Name="Cirsa", Icono= FluentIcons.AddCircle,
+                                    Childs= new HashSet<KeyCategory>
+                                    {
+                                        new KeyCategory{ Id=3, Name="Xamarin", Icono= FluentIcons.Apps,
+                                                Keys= new HashSet<Key>
+                                                {
+                                                    new Key {  Id=4, Title="Api - DEV",  Url="https://apirecaudaciondev.azurewebsites.net"  },
+                                                    new Key {  Id=5, Title="Devops",  Url="https://cirsa.visualstudio.com/"  }
+                                                }
+                                        }
+                                    }
+                             },
+                             new KeyCategory { Id=2, Name="zBackups",
+                                    Childs= new HashSet<KeyCategory>
+                                    {
+                                        new KeyCategory{ Id=3, Name="MGC", Icono= FluentIcons.Search,
+                                        },
+                                        new KeyCategory{ Id=6, Name="CocaCola",
+                                                Keys= new HashSet<Key>
+                                                {
+                                                    new Key {  Id=7, Title="VPN",  Url="https://vdi.ccep.com/IBM/IBMWeb/"  }
+                                                }
+                                        }
+                                    }
+                            }
+                        },
+                        Keys= new HashSet<Key>
+                        {
+                            new Key {  Id=8, Title="Mail", Url="http://www.outlook.com/"  }
+                        }
+                }
+            };
+        }
+        return base.OnInitializedAsync();
+    }
+
+    public class Key
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public string Notes { get; set; }
+    }
+
+    public class KeyCategory
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Icono { get; set; }
+        public IEnumerable<KeyCategory> Childs { get; set; }
+        public IEnumerable<Key> Keys { get; set; }
+        public int Oder { get; set; }
+    }
+
+}
